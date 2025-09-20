@@ -1,5 +1,3 @@
-library _color_swatch;
-
 import 'dart:math';
 import 'dart:io';
 
@@ -29,6 +27,11 @@ const _colorModel = """static const \$n = MaterialColor(\$0, {
 final RegExp _nameRegExp = RegExp(r'^[a-zA-Z_][a-zA-Z0-9_]*$');
 final RegExp _colorRegExp = RegExp(r'^[0-9a-fA-F]{6}$');
 
+/// Implementação melhorada usando o algoritmo do color_palette_plus
+MaterialColor generateSwatch(Color color) {
+  return ColorPalette.generateSwatch(color);
+}
+
 String generateSwatchScript(List<String> colorsKeys) {
   final Iterable<MapEntry<String, MaterialColor>> colors = colorsKeys.map((k) {
     final split = k.split(":");
@@ -51,7 +54,7 @@ String generateSwatchScript(List<String> colorsKeys) {
     for (var MapEntry(key: name, value: color) in colors)
       _colorModel
       .replaceFirst("\$n", name)
-      .replaceFirst("\$0", "0x${color.shade500.value.toRadixString(16).toUpperCase()}")
+      .replaceFirst("\$0", "0x${color.baseColor.value.toRadixString(16).toUpperCase()}")
         .replaceFirst("\$50", "0x${color.shade50.value.toRadixString(16).toUpperCase()}")
         .replaceFirst("\$100", "0x${color.shade100.value.toRadixString(16).toUpperCase()}")
         .replaceFirst("\$200", "0x${color.shade200.value.toRadixString(16).toUpperCase()}")
