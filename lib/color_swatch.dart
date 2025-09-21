@@ -67,7 +67,7 @@ String generateSwatchScript(List<String> colorsKeys) {
         .replaceFirst("\$900", "0x${color.shade900.value.toRadixString(16).toUpperCase()}"),
   ];
 
-  return _stringModel.replaceFirst("\$0", colorStrings.join("\n\n"));
+  return _stringModel.replaceFirst("\$0", colorStrings.join("\n\n  "));
 }
 
 Future<void> generateFile(String content, { String? fileName }) async {
